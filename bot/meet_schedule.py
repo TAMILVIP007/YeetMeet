@@ -12,16 +12,14 @@ import csv
 import datetime
 from bot.meet import joinMeet
 
-meeting_list = list()
+meeting_list = []
 
 def convertTime(string_time):
     hour = string_time.split(':')[0]
     minute = string_time.split(':')[1]
 
     datetime_str = f'{datetime.date.today().strftime("%m/%d/%y")} {hour}:{minute}:00'
-    datetime_object = datetime.datetime.strptime(datetime_str, '%m/%d/%y %H:%M:%S')
-
-    return datetime_object
+    return datetime.datetime.strptime(datetime_str, '%m/%d/%y %H:%M:%S')
 
 
 class Meeting():
@@ -34,9 +32,7 @@ def getTodayMeetings():
     try:
         with open('bot/meet.csv') as file:
             read = csv.reader(file, delimiter=',')
-            meet_count = 0
             for row in read:
-                meet_count += 1
                 if row[1] == datetime.datetime.today().strftime('%A'):
                     meeting = Meeting(row[0], row[1], row[2], row[3])
                     meeting_list.append(meeting)
